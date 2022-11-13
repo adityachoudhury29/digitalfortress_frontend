@@ -34,7 +34,6 @@ const GoogleSignIn = props => {
   }
 
   const setData = res => {
-    console.log(res)
     registerUser(res.data.id_token)
   }
 
@@ -50,7 +49,6 @@ const GoogleSignIn = props => {
           headers: { Authorization: `Bearer ${data.data.access_token}` },
         })
         .then(res => {
-          console.log(res.data)
           localStorage.email = res.data.email
           localStorage.image = res.data.picture
           localStorage.name = res.data.name
