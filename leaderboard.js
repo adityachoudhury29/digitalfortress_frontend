@@ -36,7 +36,9 @@ class LeaderBoard extends React.Component {
     const { classes } = this.props
     var self = this
     axios
+      // .get(`${process.env.GATSBY_API_URL}quiz/leaderboard?format=json`)
       .get(`${process.env.GATSBY_API_URL}quiz/leaderboard?format=json`)
+
       .then(response => {
         if (response.data.standings.length != 0) {
           var temp = response.data.standings.map((v, index) => {

@@ -6,33 +6,35 @@ import Typed from "typed.js"
 import GoogleSignIn from "../components/GoogleSignIn"
 // import FacebookSignIn from "../components/FacebookSignIn"
 import GithubSignin from "../components/GithubLogin"
-import logo from "../images/logodf.png"
+import logo from "../images/a.png"
 import { Hidden, Container, withStyles, Grid } from "@material-ui/core"
 import Countdown from "../styles/countdown"
 import Social from "../styles/social"
 import HeaderScreen from "../styles/header"
 import Rules from "../components/Rules"
-import Footer from "../components/Footer";
+import Footer from "../components/Footer"
+import { GoogleOAuthProvider } from "@react-oauth/google"
+
 
 var styles = theme => ({
   root: {
     padding: theme.spacing(0),
   },
-  container:{
+  container: {
     height: "70vh",
-    width:"100vw",
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    flexDirection:"column"
+    width: "100vw",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
-  icongrid:{
-    width:"100%",
-    textAlign:"center",
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-  }
+  icongrid: {
+    width: "100%",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })
 
 class IndexPage extends React.Component {
@@ -52,32 +54,31 @@ class IndexPage extends React.Component {
     const { classes } = this.props
     return (
       <div>
-        <SEO title="Home" />
-        <DashboardLayout>
-              <div className={classes.container}>
-
-                <div>
-                  <img src={logo} className="dfimg" />
-                </div>
-                
-                <h3 className="dftxt" style={{color:"#fff", textAlign:"center"}}>
-                  Competition to <span className="element"></span>
-                </h3>
-
-                <div className={classes.icongrid}>
-                    <GoogleSignIn />
-                    {/* <FacebookSignIn /> */}
-                    {/* <GithubSignin /> */}
-                    
-                </div>
-                
+        <GoogleOAuthProvider clientId="333847569813-psvc7or5g1cjj69p42sm16r2i4e0t54m.apps.googleusercontent.com">
+          <SEO title="Home" />
+          <DashboardLayout>
+            <div className={classes.container}>
+              <div>
+                <img src={logo} className="dfimg" />
               </div>
-            
-            
+
+              <h3
+                className="dftxt"
+                style={{ color: "#5c3c54", textAlign: "center" }}
+              >
+                Competition to <span className="element"></span>
+              </h3>
+
+              <div className={classes.icongrid}>
+                <GoogleSignIn />
+                {/* <FacebookSignIn /> */}
+                {/* <GithubSignin /> */}
+              </div>
+            </div>
+
             <Footer />
-         
-          
-        </DashboardLayout>
+          </DashboardLayout>
+        </GoogleOAuthProvider>
       </div>
     )
   }

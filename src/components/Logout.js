@@ -26,7 +26,7 @@ export default props => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (localStorage.email) {
+    if (localStorage.token) {
       setLogged(1)
       setName(localStorage.name)
       setImage(localStorage.image)

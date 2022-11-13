@@ -1,17 +1,19 @@
 import React from "react"
-import GoogleLogin from "react-google-login"
+import { useEffect } from "react"
 import "../custom.css"
 import axios from "axios"
 import { navigate } from "gatsby"
 import "../styles/social.css"
+import { GoogleOAuthProvider } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
 
-export default class GoogleSignIn extends React.Component {
-  constructor(props) {
-    super(props)
-    this.setData = this.setData.bind(this)
-  }
-
-  registerUser(idToken) {
+const GoogleSignIn = props => {
+  useEffect(() => {
+    if (localStorage.token) {
+      navigate("/dashboard/")
+    }
+  }, [])
+  const registerUser = idToken => {
     axios
       .post(
         `${process.env.GATSBY_API_URL}quiz/auth/register`,
@@ -26,69 +28,50 @@ export default class GoogleSignIn extends React.Component {
         }
       )
       .then(res => {
-        if (res.data.status == 402) {
-          axios
-            .post(
-              `${process.env.GATSBY_API_URL}quiz/auth/login`,
-              {
-                accesstoken: idToken,
-                type: "1",
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            )
-            .then(res => {
-              //console.log(res);
-              localStorage.token = res.data.token
-              navigate("/dashboard/")
-            })
-            .catch(res => console.log(res))
-        } else {
-          //console.log("User registered successfully")
-          localStorage.token = res.data.token
-          navigate("/dashboard/")
-        }
+        localStorage.token = res.data.token
+        navigate("/dashboard/")
       })
   }
 
-  componentDidMount() {
-    if (localStorage.email) {
-      navigate("/dashboard/")
-    }
+  const setData = res => {
+    console.log(res)
+    registerUser(res.data.id_token)
   }
 
-  setData(res) {
-    //console.log(res.tokenId)
-    this.registerUser(res.tokenId)
-    localStorage.email = res.profileObj.email
-    localStorage.image = res.profileObj.imageUrl
-    localStorage.name = res.profileObj.name
-  }
-  MyGoogleButton = ({ onClick }) => (
-    <div className="social-btns">
-      <button className="btn google" onClick={onClick}>
-        <i className="fa fa-google" />
-      </button>
-    </div>
+  const login = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async tokenResponse => {
+      const data = await axios.post(
+        `https://oauth2.googleapis.com/token?code=${tokenResponse.code}&redirect_uri=${process.env.GATSBY_REDIRECT_URI}&client_id=${process.env.GATSBY_GOOGLE_LOGIN_CLIENT_ID}&client_secret=${process.env.GATSBY_GOOGLE_LOGIN_CLIENT_SECRET}&grant_type=authorization_code`
+      )
+      setData(data)
+      const userInfo = await axios
+        .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${data.data.access_token}` },
+        })
+        .then(res => {
+          console.log(res.data)
+          localStorage.email = res.data.email
+          localStorage.image = res.data.picture
+          localStorage.name = res.data.name
+        })
+        .catch(error => console.log(error))
+    },
+    onFailure: res => {
+      console.log(res)
+    },
+    cookiePolicy: "single_host_origin",
+    className: props.className,
+  })
+
+  return (
+    <GoogleOAuthProvider clientId={process.env.GATSBY_GOOGLE_LOGIN_CLIENT_ID}>
+      <div className="social-btns">
+        <button className="btn google" onClick={login}>
+          <i className="fa fa-google" />
+        </button>
+      </div>
+    </GoogleOAuthProvider>
   )
-
-  render() {
-    return (
-      <GoogleLogin
-        clientId={process.env.GATSBY_GOOGLE_LOGIN_CLIENT_ID}
-        render={renderProps => <this.MyGoogleButton onClick={renderProps.onClick} />}
-        onSuccess={res => {
-          this.setData(res)
-        }}
-        onFailure={res => {
-          console.log(res)
-        }}
-        cookiePolicy={"single_host_origin"}
-        className={this.props.className}
-      />
-    )
-  }
 }
+export default GoogleSignIn

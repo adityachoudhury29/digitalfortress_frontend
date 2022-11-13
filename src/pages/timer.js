@@ -36,6 +36,7 @@ class Timer extends React.Component {
         }
       })
       .catch(function(error) {
+        console.log('hello')
         AnswerAlert(-1)
       })
   }

@@ -82,7 +82,7 @@ class LeaderBoard extends React.Component {
     axios
       .get(`${process.env.GATSBY_API_URL}quiz/leaderboard?format=json`)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.data.standings.length != 0 || response.data.status == 203 ) {
           self.setState({
           playerRanks: response.data.standings,
