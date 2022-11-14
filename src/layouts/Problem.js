@@ -79,7 +79,6 @@ class Problem extends React.Component {
         }
       })
       .catch(function(error) {
-        console.log('hi')
         console.log(error)
         AnswerAlert(-1)
       })
