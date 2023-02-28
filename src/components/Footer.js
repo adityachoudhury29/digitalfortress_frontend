@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../images/aarhnLogo.png';
+import logo from '../images/2023.png';
 import Glogo from '../images/glug.png';
 //import nit from '../images/Arhn.png';
 //import nit2 from '../images/arhn.png';
@@ -11,7 +11,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 export default () => {
     return <div className="bg-transparent">
         <div style={{display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
-            <div style={{color:"#fff", margin:"6px auto", textAlign:"center", maxWidth:"65%"}}><h5 className="foottxt">Created by GNU/Linux Users' Group</h5></div>
+            <div style={{color:"#fff", margin:"6px auto", textAlign:"center", maxWidth:"65%"}}><h5 className="foottxt">Created by Team Aavishkar</h5></div>
             <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
             <a href="https://www.facebook.com/arhn.nitd"><FacebookIcon style={{fontSize: "30px", color:"#fff"}}/></a>
             &nbsp;
@@ -22,7 +22,7 @@ export default () => {
             </a>
             <a href="https://nitdgplug.org/">
 
-            <img src={Glogo} alt="GLUG" height="30"  className="m-2" />
+            {/* <img src={Glogo} alt="GLUG" height="30"  className="m-2" /> */}
             </a>
             <a href="https://www.linkedin.com/company/aarohan-nit-durgapur/"><LinkedInIcon style={{fontSize: "30px", color:"#fff"}}/></a>
             &nbsp;

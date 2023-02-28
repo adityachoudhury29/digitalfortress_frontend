@@ -6,7 +6,7 @@ import Typed from "typed.js"
 import GoogleSignIn from "../components/GoogleSignIn"
 // import FacebookSignIn from "../components/FacebookSignIn"
 import GithubSignin from "../components/GithubLogin"
-import logo from "../images/a.png"
+import logo from "../images/b.png"
 import { Hidden, Container, withStyles, Grid } from "@material-ui/core"
 import Countdown from "../styles/countdown"
 import Social from "../styles/social"
@@ -64,7 +64,7 @@ class IndexPage extends React.Component {
 
               <h3
                 className="dftxt"
-                style={{ color: "#5c3c54", textAlign: "center" }}
+                style={{ color: "#fff", textAlign: "center" }}
               >
                 Competition to <span className="element"></span>
               </h3>
